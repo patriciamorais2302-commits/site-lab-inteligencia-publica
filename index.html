@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab de Capacitação e Inteligência Pública</title>
+  <style>
+    :root {
+      --navy: #0B2545;
+      --navy-2: #123B5D;
+      --teal: #008C89;
+      --teal-dark: #006E6B;
+      --green: #1B8A5A;
+      --light: #F6F9FB;
+      --line: #DDE6EE;
+      --text: #14213D;
+      --muted: #5F6F7F;
+      --white: #FFFFFF;
+      --gold: #F2B84B;
+      --red: #B23A48;
+      --shadow: 0 18px 45px rgba(11, 37, 69, 0.12);
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--white);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .navbar {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.05;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--teal), var(--navy));
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 22px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: white;
+      box-shadow: 0 10px 24px rgba(0, 140, 137, 0.18);
+    }
+
+    .btn-primary:hover {
+      background: var(--teal-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: white;
+      border-color: #B9CBD8;
+      color: var(--navy);
+    }
+
+    .btn-dark {
+      background: var(--navy);
+      color: white;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 8% 22%, rgba(0, 140, 137, 0.14), transparent 27%),
+        radial-gradient(circle at 92% 8%, rgba(11, 37, 69, 0.10), transparent 25%),
+        linear-gradient(180deg, #FFFFFF 0%, #F8FBFD 100%);
+      border-bottom: 1px solid var(--line);
+      padding: 88px 0 42px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.2fr;
+      gap: 46px;
+      align-items: center;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #EAF7F7;
+      color: var(--teal-dark);
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid #CBEDEC;
+    }
+
+    h1 {
+      margin: 26px 0 0;
+      font-size: clamp(40px, 6vw, 66px);
+      line-height: 1.02;
+      color: var(--navy);
+      letter-spacing: -2px;
+    }
+
+    h1 span {
+      color: var(--teal-dark);
+    }
+
+    .hero p {
+      margin: 24px 0 0;
+      font-size: 18px;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 590px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .dashboard-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      min-height: 520px;
+    }
+
+    .mockup {
+      display: grid;
+      grid-template-columns: 165px 1fr;
+      min-height: 520px;
+    }
+
+    .sidebar {
+      background: var(--navy);
+      color: white;
+      padding: 22px 18px;
+    }
+
+    .side-title {
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 24px;
+      color: #D8F5F4;
+    }
+
+    .side-item {
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-bottom: 7px;
+      color: #DCE8F0;
+    }
+
+    .side-item.active {
+      background: var(--teal);
+      color: white;
+      font-weight: 800;
+    }
+
+    .mock-main {
+      background: #F4F7FA;
+      padding: 22px;
+    }
+
+    .mock-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .mock-head h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 20px;
+    }
+
+    .mock-head small {
+      color: var(--teal-dark);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .status {
+      background: #E7F8F2;
+      color: var(--green);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .metric {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .metric label {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 25px;
+      color: var(--navy);
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 4px;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .mock-panels {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 15px;
+    }
+
+    .panel h4 {
+      margin: 0 0 12px;
+      font-size: 14px;
+      color: var(--navy);
+    }
+
+    .chart {
+      height: 155px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #F2F7FA, #EAF8F8);
+      display: flex;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .alert {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: #F7FAFC;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      line-height: 1.35;
+      color: var(--muted);
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      margin-top: 4px;
+      background: var(--teal);
+      flex: 0 0 auto;
+    }
+
+    .problem-strip {
+      padding: 36px 0;
+      background: white;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .problem-card,
+    .solution-card,
+    .sector-card,
+    .note-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 10px 25px rgba(11, 37, 69, 0.05);
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      background: #EAF7F7;
+      color: var(--teal-dark);
+      margin-bottom: 14px;
+    }
+
+    .problem-card h3,
+    .solution-card h3,
+    .sector-card h3 {
+      margin: 0 0 8px;
+      color: var(--navy);
+      font-size: 16px;
+    }
+
+    .problem-card p,
+    .solution-card p,
+    .sector-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    section {
+      padding: 82px 0;
+    }
+
+    .section-header {
+      max-width: 780px;
+      margin-bottom: 42px;
+    }
+
+    .eyebrow {
+      color: var(--teal-dark);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 900;
+      margin: 0 0 12px;
+    }
+
+    h2 {
+      color: var(--navy);
+      font-size: clamp(30px, 4vw, 46px);
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 17px;
+      margin: 18px 0 0;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 15px;
+    }
+
+    .step {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      position: relative;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--navy);
+      color: white;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      color: var(--navy);
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 13px;
+    }
+
+    .dark {
+      background: var(--navy);
+      color: white;
+    }
+
+    .dark h2,
+    .dark .section-header p {
+      color: white;
+    }
+
+    .dark .eyebrow {
+      color: #72D6D3;
+    }
+
+    .solutions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .solution-card.dark-card {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.12);
+      box-shadow: none;
+    }
+
+    .solution-card.dark-card h3 {
+      color: white;
+    }
+
+    .solution-card.dark-card p {
+      color: #C8D6E2;
+    }
+
+    .sectors {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .prototype {
+      background: var(--light);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .prototype-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .check-list {
+      margin: 30px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .check-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 13px;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .check {
+      color: var(--teal-dark);
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .embed-box {
+      min-height: 470px;
+      background: white;
+      border: 2px dashed #9BD8D6;
+      border-radius: 26px;
+      display: grid;
+      place-items: center;
+      padding: 34px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .embed-box h3 {
+      margin: 18px 0 10px;
+      color: var(--navy);
+      font-size: 28px;
+    }
+
+    .embed-box p {
+      max-width: 590px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0 auto 22px;
+    }
+
+    .embed-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 22px;
+      background: #EAF7F7;
+      display: grid;
+      place-items: center;
+      font-size: 34px;
+      color: var(--teal-dark);
+      margin: 0 auto;
+    }
+
+    .differentials {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .cta {
+      background: linear-gradient(135deg, var(--navy), var(--teal-dark));
+      color: white;
+      text-align: center;
+    }
+
+    .cta h2 {
+      color: white;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .cta p {
+      color: #D8E6EE;
+      line-height: 1.7;
+      max-width: 760px;
+      margin: 20px auto 0;
+      font-size: 17px;
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    footer {
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-flex {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      nav,
+      .nav-actions {
+        display: none;
+      }
+
+      .hero-grid,
+      .prototype-grid,
+      .differentials {
+        grid-template-columns: 1fr;
+      }
+
+      .problem-grid,
+      .solutions,
+      .sectors,
+      .steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .mockup {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .hero {
+        padding-top: 52px;
+      }
+
+      .problem-grid,
+      .solutions,
+      .sectors,
+      .steps,
+      .diff-grid,
+      .metric-grid,
+      .mock-panels {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      .hero-actions,
+      .cta-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container navbar">
+      <a href="#inicio" class="brand">
+        <div class="brand-mark">L</div>
+        <div>
+          <div>Lab de Capacitação e</div>
+          <div>Inteligência Pública</div>
+        </div>
+      </a>
+
+      <nav>
+        <a href="#solucoes">Soluções</a>
+        <a href="#setores">Setores</a>
+        <a href="#metodologia">Metodologia</a>
+        <a href="#prototipo">Protótipo</a>
+        <a href="#contato">Contato</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-outline" href="#contato">Fale conosco</a>
+        <a class="btn btn-primary" href="#prototipo">Ver protótipo</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="tag">Dados, gestão e pessoas para transformar o serviço público</span>
+          <h1>Transformamos dados em <span>decisões, gestão e ação pública.</span></h1>
+          <p>
+            Combinamos BI, IA e capacitação para apoiar secretarias, escolas, municípios e equipes técnicas na construção de uma gestão eficiente, baseada em evidências e centrada em resultados.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-dark" href="#solucoes">Conheça as soluções →</a>
+            <a class="btn btn-outline" href="#contato">Agendar diagnóstico</a>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="mockup">
+            <aside class="sidebar">
+              <div class="side-title">Lab de Capacitação e Inteligência Pública</div>
+              <div class="side-item active">Visão geral</div>
+              <div class="side-item">Indicadores</div>
+              <div class="side-item">Análises</div>
+              <div class="side-item">Alertas</div>
+              <div class="side-item">Planos de ação</div>
+              <div class="side-item">Protótipos</div>
+              <div class="side-item">Capacitações</div>
+            </aside>
+
+            <div class="mock-main">
+              <div class="mock-head">
+                <div>
+                  <small>Visão geral da gestão</small>
+                  <h3>Indicadores e recomendações</h3>
+                </div>
+                <span class="status">Atualizado</span>
+              </div>
+
+              <div class="metric-grid">
+                <div class="metric">
+                  <label>Estudantes analisados</label>
+                  <strong>150</strong>
+                  <span>base fictícia</span>
+                </div>
+                <div class="metric">
+                  <label>Em risco alto/crítico</label>
+                  <strong>22</strong>
+                  <span>14,7% do total</span>
+                </div>
+                <div class="metric">
+                  <label>Risco crítico</label>
+                  <strong>7</strong>
+                  <span>prioridade imediata</span>
+                </div>
+                <div class="metric">
+                  <label>Frequência média</label>
+                  <strong>72,4%</strong>
+                  <span>monitoramento ativo</span>
+                </div>
+              </div>
+
+              <div class="mock-panels">
+                <div class="panel">
+                  <h4>Evolução dos principais indicadores</h4>
+                  <div class="chart">
+                    <svg viewBox="0 0 520 150" width="100%" height="100%">
+                      <polyline points="0,110 70,92 140,96 210,62 280,75 350,46 420,58 520,32" fill="none" stroke="#008C89" stroke-width="6" stroke-linecap="round"></polyline>
+                      <polyline points="0,128 70,120 140,112 210,102 280,93 350,86 420,78 520,68" fill="none" stroke="#0B2545" stroke-width="5" stroke-linecap="round"></polyline>
+                      <polyline points="0,74 70,82 140,70 210,72 280,58 350,64 420,50 520,43" fill="none" stroke="#F2B84B" stroke-width="5" stroke-linecap="round"></polyline>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="panel">
+                  <h4>Alertas e recomendações</h4>
+                  <div class="alert"><span class="dot"></span><div><strong>Risco crítico</strong><br>7 estudantes com prioridade imediata.</div></div>
+                  <div class="alert"><span class="dot"></span><div><strong>Frequência baixa</strong><br>Principal fator associado.</div></div>
+                  <div class="alert"><span class="dot"></span><div><strong>Plano de ação</strong><br>Reavaliar em 7 a 10 dias.</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="problem-strip">
+      <div class="container problem-grid">
+        <article class="problem-card">
+          <div class="icon">📊</div>
+          <h3>Dados sem ação</h3>
+          <p>Muitas redes possuem dados, mas têm dificuldade de transformar indicadores em decisões práticas.</p>
+        </article>
+        <article class="problem-card">
+          <div class="icon">⚙️</div>
+          <h3>Processos fragmentados</h3>
+          <p>Frequência, desempenho, busca ativa e intervenções nem sempre conversam entre si.</p>
+        </article>
+        <article class="problem-card">
+          <div class="icon">🔎</div>
+          <h3>Risco identificado tarde</h3>
+          <p>A evasão costuma ser percebida quando o estudante já se afastou da escola.</p>
+        </article>
+        <article class="problem-card">
+          <div class="icon">🧭</div>
+          <h3>Acompanhamento frágil</h3>
+          <p>Planos de ação sem monitoramento contínuo reduzem a capacidade de resposta da gestão.</p>
+        </article>
+      </div>
+    </div>
+
+    <section id="metodologia">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Como a solução funciona</p>
+          <h2>Da leitura dos dados ao plano de ação monitorado.</h2>
+          <p>A proposta combina diagnóstico, estruturação de dados, visualização em painéis, IA generativa e acompanhamento contínuo para transformar informação em decisão pública qualificada.</p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Diagnóstico</h3>
+            <p>Entendimento do contexto, objetivos e dados disponíveis.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Organização dos dados</h3>
+            <p>Estruturação de bases, indicadores e critérios de risco.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Painéis e análises</h3>
+            <p>Visualizações para apoiar decisões e priorização.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>IA generativa</h3>
+            <p>Hipóteses, recomendações e planos de intervenção.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">5</div>
+            <h3>Monitoramento</h3>
+            <p>Acompanhamento de resultados, evidências e ajustes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="solucoes" class="dark">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Nossas soluções</p>
+          <h2>Inteligência aplicada para gestão pública, educação e projetos sociais.</h2>
+          <p>Soluções modulares para começar pequeno, gerar valor rápido e evoluir para sistemas mais completos de monitoramento e decisão.</p>
+        </div>
+
+        <div class="solutions">
+          <article class="solution-card dark-card">
+            <div class="icon">🔎</div>
+            <h3>Diagnóstico operacional</h3>
+            <p>Mapeamento de desafios, processos e indicadores críticos.</p>
+          </article>
+          <article class="solution-card dark-card">
+            <div class="icon">📈</div>
+            <h3>Painéis de indicadores</h3>
+            <p>Dashboards executivos para acompanhamento e decisão.</p>
+          </article>
+          <article class="solution-card dark-card">
+            <div class="icon">🎓</div>
+            <h3>Capacitações</h3>
+            <p>Formação prática em dados, IA e gestão por evidências.</p>
+          </article>
+          <article class="solution-card dark-card">
+            <div class="icon">📋</div>
+            <h3>Planos de ação assistidos</h3>
+            <p>Priorização, responsáveis, prazos e indicadores de monitoramento.</p>
+          </article>
+          <article class="solution-card dark-card">
+            <div class="icon">🧠</div>
+            <h3>IA aplicada à gestão</h3>
+            <p>Apoio à análise, recomendações e relatórios técnicos.</p>
+          </article>
+          <article class="solution-card dark-card">
+            <div class="icon">⚙️</div>
+            <h3>Gestão de processos</h3>
+            <p>Redesenho de fluxos, rotinas e governança da informação.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="setores">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Setores atendidos</p>
+          <h2>Soluções adaptáveis para diferentes desafios públicos.</h2>
+        </div>
+
+        <div class="sectors">
+          <article class="sector-card">
+            <div class="icon">🏫</div>
+            <h3>Educação</h3>
+            <p>Permanência escolar, aprendizagem, gestão pedagógica e indicadores.</p>
+          </article>
+          <article class="sector-card">
+            <div class="icon">👥</div>
+            <h3>Gestão pública</h3>
+            <p>Apoio a secretarias, municípios, equipes técnicas e programas.</p>
+          </article>
+          <article class="sector-card">
+            <div class="icon">📍</div>
+            <h3>Territórios</h3>
+            <p>Análise territorial para políticas públicas mais responsivas.</p>
+          </article>
+          <article class="sector-card">
+            <div class="icon">✨</div>
+            <h3>Projetos sociais</h3>
+            <p>Monitoramento, avaliação e inteligência para impacto social.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="prototipo" class="prototype">
+      <div class="container prototype-grid">
+        <div>
+          <div class="section-header">
+            <p class="eyebrow">Protótipo em destaque</p>
+            <h2>Radar de Permanência Escolar com IA</h2>
+            <p>Um protótipo analítico para identificar sinais de risco, organizar prioridades e sugerir intervenções para apoiar a permanência escolar.</p>
+          </div>
+
+          <ul class="check-list">
+            <li><span class="check">✓</span>Predição e classificação de risco escolar.</li>
+            <li><span class="check">✓</span>Análise de múltiplos fatores associados.</li>
+            <li><span class="check">✓</span>Priorização de estudantes e turmas.</li>
+            <li><span class="check">✓</span>Recomendações de intervenção com apoio de IA.</li>
+            <li><span class="check">✓</span>Painel analítico interativo e explicável.</li>
+          </ul>
+
+          <div class="note-card" style="margin-top: 28px;">
+            <strong>Nota ética e metodológica</strong>
+            <p style="margin: 10px 0 0; color: var(--muted); line-height: 1.7;">
+              A IA não decide pela escola. Ela organiza evidências, levanta hipóteses e sugere caminhos de intervenção que devem ser validados pela equipe escolar.
+            </p>
+          </div>
+        </div>
+
+        <div class="embed-box">
+          <div>
+            <div class="embed-icon">👁️</div>
+            <h3>Área do protótipo Power BI</h3>
+            <p>
+              Quando o painel for publicado, esta área pode receber o link de incorporação do Power BI ou um botão para abrir o relatório analítico.
+            </p>
+            <a class="btn btn-primary" href="#">Acessar protótipo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container differentials">
+        <div class="section-header">
+          <p class="eyebrow">O que torna a proposta diferente</p>
+          <h2>Não é apenas painel. É inteligência para orientar ação.</h2>
+          <p>O foco está na capacidade de transformar indicadores em rotinas de gestão, planos de intervenção e acompanhamento contínuo.</p>
+        </div>
+
+        <div class="diff-grid">
+          <div class="note-card"><span class="check">✓</span><p>Integra análise de dados, IA e formação das equipes.</p></div>
+          <div class="note-card"><span class="check">✓</span><p>Prioriza intervenções explicáveis e auditáveis.</p></div>
+          <div class="note-card"><span class="check">✓</span><p>Valoriza decisões humanas e governança responsável.</p></div>
+          <div class="note-card"><span class="check">✓</span><p>Permite começar com MVP e evoluir para sistema completo.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="cta">
+      <div class="container">
+        <p class="eyebrow">Vamos construir o próximo piloto?</p>
+        <h2>Comece com um diagnóstico, evolua para um painel e teste a IA em decisões reais.</h2>
+        <p>
+          Use o protótipo como demonstração para redes, escolas, municípios, organizações sociais e projetos interessados em gestão orientada por dados.
+        </p>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="mailto:contato@seudominio.com">Fale conosco</a>
+          <a class="btn btn-outline" href="#prototipo">Ver protótipo</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-flex">
+      <span>© 2026 Lab de Capacitação e Inteligência Pública. Protótipo conceitual.</span>
+      <span>BI • IA • Capacitação • Gestão pública orientada por evidências</span>
+    </div>
+  </footer>
+</body>
+</html>
